@@ -24,3 +24,17 @@ function RenderBoard() {
         console.log();
     }
 };
+
+RenderBoard();
+
+function Player(name, symbol) {
+    return { name, symbol };
+};
+
+const player1 = Player('Tanzim', 'X');
+const player2 = Player('Random', 'O');
+let playerTurn = player1;
+
+function InputValue(i, j, value) {
+    board[i][j] = value;
+};
