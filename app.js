@@ -33,8 +33,23 @@ function Player(name, symbol) {
 
 const player1 = Player('Tanzim', 'X');
 const player2 = Player('Random', 'O');
-let playerTurn = player1;
 
 function InputValue(i, j, value) {
     board[i][j] = value;
+};
+
+let playerTurn = player1;
+
+function playerTurnFunction() {
+    let value = ''
+
+    if (playerTurn == player1) {
+        value = player1.symbol;
+        playerTurn = player2;
+    } else {
+        value = player2.symbol;
+        playerTurn = player1
+    }
+
+    return value;
 };
