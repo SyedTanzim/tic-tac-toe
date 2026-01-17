@@ -29,35 +29,85 @@ function RenderBoard() {
 
 RenderBoard();
 
-function Player(name, symbol) {
+function PlayerFactory(name, symbol) {
     return { name, symbol };
 };
 
-const player1 = Player('Tanzim', 'X');
-const player2 = Player('Random', 'O');
+const player1 = PlayerFactory('Tanzim', 'X');
+const player2 = PlayerFactory('Himesh', 'O');
 
-function InputValue(i, j, value) {
+function InputManager(i, j, value) {
     board[i][j] = value;
 };
 
-let playerTurn = player1;
+function WinChecker() {
 
-function playerTurnFunction() {
-    let value = ''
-
-    if (playerTurn == player1) {
-        value = player1.symbol;
-        playerTurn = player2;
-    } else {
-        value = player2.symbol;
-        playerTurn = player1
+    if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] != null) {
+        return true;
     }
 
-    return value;
+    if (board[1][0] == board[1][1] && board[1][1] == board[1][2] && board[1][0] != null) {
+        return true;
+    }
+
+    if (board[2][0] == board[2][1] && board[2][1] == board[2][2] && board[2][0] != null) {
+        return true;
+    }
+
+    if (board[1][1] == board[0][0] && board[1][1] == board[2][2] && board[1][1] != null) {
+        return true;
+    }
+
+    if (board[1][1] == board[0][2] && board[1][1] == board[2][0] && board[1][1] != null) {
+        return true;
+    }
+
+    if (board[0][0] == board[1][0] && board[1][0] == board[2][0] && board[0][0] != null) {
+        return true;
+    }
+
+    if (board[0][1] == board[1][1] && board[1][1] == board[2][1] && board[0][1] != null) {
+        return true;
+    }
+
+    if (board[0][2] == board[1][2] && board[1][0] == board[2][2] && board[0][2] != null) {
+        return true;
+    }
+
+    return false;
+
+}
+
+function TurnManager() {
+    let move = ''
+    let lastMove = ''
+
+    function nextMove() {
+        if (lastMove == '' || lastMove == player2.symbol) {
+            move = player1.symbol;
+            lastMove = move;
+        } else {
+            move = player2.symbol;
+            lastMove = move;
+        }
+    }
+
+    function getMove() {
+        return move;
+    }
+
+    function getLastMove() {
+        return lastMove;
+    }
+
+    return { nextMove, getMove, getLastMove };
 };
+
+const Turn = TurnManager();
 
 function GameFlow() {
     let count = row * col;
+
     while (count > 0) {
 
         let rowInput = parseInt(prompt('enter row b/w 0-2: '));
@@ -72,16 +122,22 @@ function GameFlow() {
             continue;
         }
 
-        if(board[rowInput][colInput] != null){
+        if (board[rowInput][colInput] != null) {
             console.log('Cell already occupied');
-            continue;            
+            continue;
         }
 
-        let playerMove = playerTurnFunction();
-        InputValue(rowInput, colInput, playerMove);
+        Turn.nextMove();
+        InputManager(rowInput, colInput, Turn.getMove());
         count--;
         RenderBoard();
-        
+
+        if (WinChecker() == true) {
+            console.log(Turn.getLastMove(), 'Won the game');
+            break;
+        } else if( WinChecker() == false && count == 0 ){
+            console.log('Game is Draw');
+        }
     }
 };
 
