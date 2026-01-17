@@ -70,7 +70,7 @@ function WinChecker() {
         return true;
     }
 
-    if (board[0][2] == board[1][2] && board[1][0] == board[2][2] && board[0][2] != null) {
+    if (board[0][2] == board[1][2] && board[1][2] == board[2][2] && board[0][2] != null) {
         return true;
     }
 
@@ -80,30 +80,28 @@ function WinChecker() {
 
 function TurnManager() {
     let move = ''
-    let lastMove = ''
+    let name = '';
 
-    function nextMove() {
-        if (lastMove == '' || lastMove == player2.symbol) {
+    function setMoveAndName() {
+        if (move == '' || move == player2.symbol) {
             move = player1.symbol;
-            lastMove = move;
+            name = player1.name;
         } else {
             move = player2.symbol;
-            lastMove = move;
+            name = player2.name;
         }
     }
 
     function getMove() {
         return move;
     }
-
-    function getLastMove() {
-        return lastMove;
+    function getName(){
+        return name;
     }
-
-    return { nextMove, getMove, getLastMove };
+    return { getMove, getName, setMoveAndName };
 };
 
-const Turn = TurnManager();
+const turn = TurnManager();
 
 function GameFlow() {
     let count = row * col;
@@ -127,15 +125,17 @@ function GameFlow() {
             continue;
         }
 
-        Turn.nextMove();
-        InputManager(rowInput, colInput, Turn.getMove());
+        turn.setMoveAndName();
+        InputManager(rowInput, colInput, turn.getMove());
         count--;
         RenderBoard();
 
-        if (WinChecker() == true) {
-            console.log(Turn.getLastMove(), 'Won the game');
+        let result = WinChecker();
+
+        if (result == true) {
+            console.log(turn.getName(), 'Won the game');
             break;
-        } else if( WinChecker() == false && count == 0 ){
+        } else if (count == 0) {
             console.log('Game is Draw');
         }
     }
