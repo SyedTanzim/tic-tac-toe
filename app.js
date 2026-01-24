@@ -32,4 +32,10 @@ function GameBoard() {
     return { getBoard, setMark, resetBoard }
 };
 
+function player(name, mark) {
+    return {name, mark};
+}
+
+let player1 = player('Tanzim','X');
+let player2 = player('Bot', 'O');
 
