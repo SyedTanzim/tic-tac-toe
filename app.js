@@ -33,9 +33,26 @@ function GameBoard() {
 };
 
 function player(name, mark) {
-    return {name, mark};
+    return { name, mark };
 }
 
-let player1 = player('Tanzim','X');
+let player1 = player('Tanzim', 'X');
 let player2 = player('Bot', 'O');
+
+function GameController() {
+    let currentPlayer = undefined;
+
+    function switchTurn() {
+        if (currentPlayer === undefined || currentPlayer == player2) {
+            currentPlayer = player1;
+        } else { currentPlayer = player2 }
+    }
+
+    function getCurrentPlayer() {
+        return currentPlayer
+    }
+
+    return { switchTurn, getCurrentPlayer }
+}
+
 
