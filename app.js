@@ -129,3 +129,22 @@ const gameController = (function () {
 
     return { switchTurn, getCurrentPlayer, checkWin, checkTie, playTurn, restart }
 })();
+
+const displayController = (function () {
+    const container = document.querySelector('.container');
+
+    function renderBoard(board) {
+        container.textContent = '';
+
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.textContent = board[i][j] ?? 'hi';
+                container.appendChild(cell);
+            }
+        }
+    }
+
+    return { renderBoard };
+})();
