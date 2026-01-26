@@ -52,7 +52,38 @@ function GameController() {
         return currentPlayer
     }
 
-    return { switchTurn, getCurrentPlayer }
+    function checkWin(board) {
+
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 1; j < board.length - 1; j++) {
+                if (board[i][j - 1] != null && board[i][j - 1] === board[i][j] && board[i][j] === board[i][j + 1]) {
+                    return true
+                }
+            }
+        }
+
+        for (let i = 1; i < board.length - 1; i++) {
+            for (let j = 0; j < board.length; j++) {
+                if (board[j][i - 1] != null && board[j][i - 1] === board[j][i] && board[j][i] === board[j][i + 1]) {
+                    return true
+                }
+            }
+        }
+
+        if (board[0][0] != null && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+            return true;
+        }
+
+        if (board[0][2] != null && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+            return true;
+        }
+
+        return false;
+    }
+
+    return { switchTurn, getCurrentPlayer, checkWin
+        
+     }
 }
 
 
