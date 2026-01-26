@@ -1,4 +1,11 @@
-function GameBoard() {
+function Player(name, mark) {
+    return { name, mark };
+}
+
+let player1 = Player('Tanzim', 'X');
+let player2 = Player('Bot', 'O');
+
+const gameBoard = (function () {
     let board = [];
 
     (function setCells() {
@@ -11,13 +18,16 @@ function GameBoard() {
     })();
 
     function getBoard() {
-        return { board };
+        return board;
     }
 
     function setMark(row, col, mark) {
         if (board[row][col] === null) {
             board[row][col] = mark;
+            return true;
         }
+
+        return false;
     }
 
     function resetBoard() {
@@ -30,23 +40,14 @@ function GameBoard() {
     }
 
     return { getBoard, setMark, resetBoard }
-}
+})();
 
-const gameBoard = GameBoard();
-let { board } = gameBoard.getBoard();
-
-function player(name, mark) {
-    return { name, mark };
-}
-
-let player1 = player('Tanzim', 'X');
-let player2 = player('Bot', 'O');
-
-function GameController() {
-    let currentPlayer = undefined;
+const gameController = (function () {
+    let currentPlayer = player1;
+    let isGameOver = false;
 
     function switchTurn() {
-        if (currentPlayer === undefined || currentPlayer === player2) {
+        if (currentPlayer === player2) {
             currentPlayer = player1;
         } else { currentPlayer = player2 }
     }
@@ -87,20 +88,44 @@ function GameController() {
     function checkTie(board) {
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board.length; j++) {
-                if (board[i][j] != null) {
-                    return true;
-                } else {
-                    false;
+                if (board[i][j] === null) {
+                    return false;
                 }
             }
         }
+        return true;
+    }
+
+    function playTurn(row, col) {
+        if (isGameOver === true) {
+            return;
+        }
+
+        const currentPlayer = gameController.getCurrentPlayer();
+
+        const success = gameBoard.setMark(row, col, currentPlayer.mark);
+        if (success === false) {
+            return;
+        }
+
+        if (gameController.checkWin(gameBoard.getBoard())) {
+            console.log(currentPlayer.name, ' won the game');
+            isGameOver = true;
+            return;
+        }
+
+        if (gameController.checkTie(gameBoard.getBoard())) {
+            console.log('game is tied');
+            isGameOver = true;
+            return;
+        }
+
+        gameController.switchTurn();
     }
 
     function restart() {
         gameBoard.resetBoard();
     }
 
-    return { switchTurn, getCurrentPlayer, checkWin, checkTie, restart }
-}
-
-const game = GameController();
+    return { switchTurn, getCurrentPlayer, checkWin, checkTie, playTurn, restart }
+})();
