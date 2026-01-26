@@ -30,7 +30,10 @@ function GameBoard() {
     }
 
     return { getBoard, setMark, resetBoard }
-};
+}
+
+const gameBoard = GameBoard();
+let { board } = gameBoard.getBoard();
 
 function player(name, mark) {
     return { name, mark };
@@ -43,7 +46,7 @@ function GameController() {
     let currentPlayer = undefined;
 
     function switchTurn() {
-        if (currentPlayer === undefined || currentPlayer == player2) {
+        if (currentPlayer === undefined || currentPlayer === player2) {
             currentPlayer = player1;
         } else { currentPlayer = player2 }
     }
@@ -81,9 +84,25 @@ function GameController() {
         return false;
     }
 
-    return { switchTurn, getCurrentPlayer, checkWin
-        
-     }
+    function checkTie(board) {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board.length; j++) {
+                if (board[i][j] != null) {
+                    return true;
+                } else {
+                    false;
+                }
+            }
+        }
+    }
+
+    return { switchTurn, getCurrentPlayer, checkWin, checkTie }
 }
+
+const game = GameController();
+
+let win = game.checkWin(board);
+
+console.log(board);
 
 
