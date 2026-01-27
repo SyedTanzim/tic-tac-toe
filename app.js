@@ -161,7 +161,6 @@ const displayController = (function () {
                     }
                     displayController.handleClick(row, col);
                 });
-
                 cell.textContent = board[i][j] ?? '';
                 container.appendChild(cell);
             }
