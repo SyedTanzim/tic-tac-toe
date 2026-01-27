@@ -1,119 +1,100 @@
-Tic Tac Toe — The Odin Project
+# Tic Tac Toe — The Odin Project
 
-A browser-based Tic Tac Toe game built as part of The Odin Project JavaScript curriculum, with a focus on code organization, encapsulation, and separation of concerns.
+A browser-based Tic Tac Toe game built as part of **The Odin Project JavaScript curriculum**, with a focus on code organization, encapsulation, and separation of concerns.
 
-Project Goals
+---
+
+## Project Goals
 
 This project was built to practice:
 
-Organizing code using factories and the module (IIFE) pattern
+- Organizing code using factories and the module (IIFE) pattern  
+- Keeping global scope clean  
+- Separating game logic from DOM manipulation  
+- Managing application state explicitly  
+- Building the game logic first, then connecting it to the UI  
 
-Keeping global scope clean
+---
 
-Separating game logic from DOM manipulation
-
-Managing application state explicitly
-
-Building the game logic-first, then connecting it to the UI
-
-Architecture Overview
+## Architecture Overview
 
 The application is divided into clear logical modules:
 
-Player (Factory)
+### Player (Factory)
 
-Creates player objects
+- Creates player objects  
+- Stores player name and mark (`X` or `O`)  
 
-Stores player name and mark (X or O)
+### gameBoard (IIFE Module)
 
-gameBoard (IIFE Module)
+- Owns the game board state  
+- Stores the board internally as a 2D array  
+- Exposes methods to:
+  - Get the board  
+  - Place a mark  
+  - Reset the board  
 
-Owns the game board state
+### gameController (IIFE Module)
 
-Stores the board internally as a 2D array
+- Controls game flow and rules  
+- Tracks:
+  - Current player  
+  - Game-over state  
+- Handles:
+  - Turn switching  
+  - Win detection  
+  - Tie detection  
+  - Validating moves  
 
-Exposes methods to:
+### displayController (IIFE Module)
 
-Get the board
+- Responsible for all DOM interactions  
+- Renders the board based on game state  
+- Handles user input (clicks)  
+- Re-renders the UI only when the game state changes  
 
-Place a mark
+---
 
-Reset the board
+## Features
 
-gameController (IIFE Module)
+- Two-player Tic Tac Toe (`X` vs `O`)  
+- Click-based interaction  
+- Prevents overwriting occupied cells  
+- Detects:
+  - Wins (rows, columns, diagonals)  
+  - Ties  
+- State-driven rendering (UI updates only on valid moves)  
+- Minimal global variables  
 
-Controls game flow and rules
+---
 
-Tracks:
+## Technologies Used
 
-Current player
-
-Game-over state
-
-Handles:
-
-Turn switching
-
-Win detection
-
-Tie detection
-
-Validating moves
-
-displayController (IIFE Module)
-
-Responsible for all DOM interactions
-
-Renders the board based on game state
-
-Handles user input (clicks)
-
-Re-renders the UI only when the game state changes
-
-Features
-
-Two-player Tic Tac Toe (X vs O)
-
-Click-based interaction
-
-Prevents overwriting occupied cells
-
-Detects:
-
-Wins (rows, columns, diagonals)
-
-Ties
-
-State-driven rendering (UI updates only on valid moves)
-
-Minimal global variables
-
-Technologies Used
-
-HTML
-
-CSS
-
-Vanilla JavaScript (ES6+)
+- HTML  
+- CSS  
+- Vanilla JavaScript (ES6+)  
 
 No external libraries or frameworks were used.
 
-📂 Project Structure
+---
+
+## Project Structure
+
 ├── index.html
 ├── style.css
 ├── script.js
 └── README.md
 
-How to Run
+---
 
-Clone the repository:
+## How to Run
 
-git clone <your-repo-url>
+1. Clone the repository:
+   ```bash
+   git clone <your-repository-url>
+2. Open index.html in your browser.
 
-
-Open index.html in your browser.
-
-What I Learned
+## What I Learned
 
 How and why to use IIFEs for single-instance modules
 
@@ -123,8 +104,7 @@ Why DOM updates should be a reaction to state, not a trigger
 
 How separating responsibilities simplifies debugging and reasoning
 
-Assignment Source
+## Assignment Source
 
-This project is part of
-[The Odin Project – JavaScript Path]
+This project is part of The Odin Project – JavaScript Path
 Tic Tac Toe Project
